@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light site-navbar-target" id="ftco-navbar">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Clark</a>
+      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
+  
+      <div class="collapse navbar-collapse"  id="ftco-nav">
+        <ul class="navbar-nav nav ml-auto" >
+          <li class="nav-item " > <a routerLink="/home" class="nav-link"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  ><span >Home</span></a>    </li>         
+          <li class="nav-item"><a  routerLink="/clientes"class="nav-link"  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"  ><span>Clientes</span></a></li>
+          <li class="nav-item"><a routerLink="clientes/form" class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" ><span>   {{titleurl}} </span></a></li>      
+          <!-- <li class="nav-item"><a routerLink="/facturas/ver" class="nav-link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}" ><span>Facturas</span></a></li>  
+         -->
+        </ul>
+      </div>
+
+    
+      <span *ngIf="isAuth()" class="nav-link" >{{usuario}}</span>
+
+      <a  class="nav-link " style="cursor: pointer;"  *ngIf="isAuth()" (click)="logout()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><span >Logout</span></a>
+
+      <a routerLink="/login" class="nav-link"   *ngIf="!isAuth() " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><span >Login</span></a>
+
+
+
+
+    </div>
+  </nav>

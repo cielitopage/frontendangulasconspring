@@ -1,0 +1,84 @@
+<section class="ftco-section ftco-no-pb" id="resume-section">
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+            <h1>Lista de Factura {{ facturas.id}} de {{ facturas.cliente.nombre}} </h1>
+
+        </div>
+
+        <div class="col">
+            <h1>Descrip {{ facturas.descripcion}} /  tipo {{facturas.tipo}} /<br/> Fecha {{facturas.createAt}}  </h1>
+        </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col">
+
+            <table class="table table-striped"  *ngIf="facturas.items.length == 0">
+
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Descripcion</th>
+                  <th>Observacion</th>
+                  <th>Items</th>
+                  <th>Tolat</th>
+                  <th>Total</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="8" >
+                    <h3>No hay facturas para mostrar</h3>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+
+            <table class="table table-striped" *ngIf="facturas.items.length > 0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Descripcion</th>
+                  <th>Observacion</th>
+                  <th>Items</th>
+                  <th>Total</th>            
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr  *ngIf="cargando == true">
+                  <td colspan="8" >
+                   <app-spiner></app-spiner>
+                  </td>
+                </tr>
+                <tr *ngFor="let item of facturas.items">
+                  <td>{{ item.id }}</td>
+                    <td>{{ item.producto.nombre}}</td>
+                    <td>{{ item.producto.precio}}</td>
+                    <td>{{ item.cantidad}}</td>
+                    <td>{{ item.producto.precio * item.cantidad}}</td>   
+                  <td>                   
+                    <button class="btn btn-danger" >Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <h5>Total: {{ facturas.total}}</h5>
+            <h5>Observacion: {{ facturas.observacion}}</h5>
+            </div>
+
+
+          
+
+        </div>
+
+    </div>
+
+</section>
+

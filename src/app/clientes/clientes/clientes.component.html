@@ -1,0 +1,76 @@
+
+<section class="ftco-section ftco-no-pb" id="resume-section">
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Lista de Clientes</h1>
+    </div>
+
+    <div class="col">
+      <button class="btn btn-primary float-right" (click)="crear()">Nuevo cliente</button>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Imagen</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>telefono</th>
+            <th>region</th>
+            <th>Fecha de Creación</th>
+            <th>Acciones</th>
+          </tr>
+        </thead> 
+        <tbody>
+          <tr *ngIf="cargando == true">
+            <td colspan="8" >
+             <app-spiner></app-spiner>
+            </td>
+          </tr>
+
+          <tr *ngFor="let cliente of clientes">
+            <td>{{ cliente.id }}</td>
+            <td>
+              <img *ngIf="cliente.foto != null" src="http://localhost:8080/api/uploads/img/{{ cliente.foto }}"   class="img-fluid "     alt="Foto" width="50" height="50">
+              <img *ngIf="cliente.foto == null" src="../../../assets/images/noimage.png"   class="img-fluid "     alt="Foto" width="50" height="50">
+            </td>
+            <td>{{ cliente.nombre }}</td>
+            <td>{{ cliente.apellido }}</td>
+            <td>{{ cliente.email }}</td>
+            <td>{{ cliente.telefono}}</td>
+            <td>{{ cliente.region.nombre }}</td>
+            <td>{{ cliente.createAt }}</td>
+            <td>
+              
+              <button class="btn btn-info btn-sm" (click)="editar(cliente.id)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="eliminar(cliente.id)">Eliminar</button>
+              <button class="btn btn-warning btn-sm" (click)="detalle(cliente.id)">Cargar Foto</button>
+              <button class="btn btn-success btn-sm" (click)="FacturaCliente(cliente.id)">Facturas</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div>
+
+
+</section>
+
+
+  
+<div class=" col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 d-flex justify-content-center">
+  <app-paginator *ngIf="paginador"  [paginador] = "paginador" ></app-paginator>
+</div>
+
+
+
+

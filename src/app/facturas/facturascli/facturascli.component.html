@@ -1,0 +1,80 @@
+<section class="ftco-section ftco-no-pb" id="resume-section">
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>Lista de Facturas del {{ nombre }} {{ apellido }}</h1>
+         
+        </div>
+
+        <div class="col">
+          <button class="btn btn-primary float-right" (click)="crear()">Nueva Factura</button>
+        </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col">
+
+            <table class="table table-striped" *ngIf="facturas.length == 0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Descripcion</th>
+                  <th>Observacion</th>
+                  <th>Items</th>
+                  <th>Fecha de Creación</th>
+                  <th>Total</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead> 
+              <tbody>
+                <tr>
+                  <td colspan="8" >
+                    <h3>No hay facturas para mostrar</h3>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+
+
+            <table class="table table-striped" *ngIf="cliente.facturas.length > 0">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Descripcion</th>
+                  <th>Observacion</th>
+                  <th>Items</th>
+                  <th>Fecha de Creación</th>
+                  <th>Total</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead> 
+              <tbody>
+                <tr *ngIf="cargando == true">
+                  <td colspan="8" >
+                   <app-spiner></app-spiner>
+                  </td>
+                </tr>
+
+                <tr *ngFor="let factura of cliente.facturas">
+                  <td>{{ factura.id }}</td>
+                  <td>{{ factura.descripcion }}</td>
+                  <td>{{ factura.observacion }}</td>
+                    <td>{{ factura.items.length }}</td>
+                  <td>{{ factura.createAt }}</td>
+                    <td>{{ factura.total }}</td>
+                  <td>
+                     
+                    <button class="btn btn-info btn-sm" (click)="editar(factura.id)">Editar</button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminar(factura.id)">Eliminar</button>
+                    <button class="btn btn-warning btn-sm" (click)="ver(factura.id)">Ver</button>
+                 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+

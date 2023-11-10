@@ -1,0 +1,99 @@
+<section class="ftco-section contact-section ftco-no-pb" id="contact-section">
+    <div class="container">
+
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+            <h1 class="big big-2">Contact</h1>
+            <h2 class="mb-4">Contact Me</h2>
+            <p>Si tienes alguna duda o consulta, no dudes en contactarme.</p>
+            </div>
+        </div>
+        <ul class="list-group" *ngIf="errors?.length > 0">
+          <li *ngFor="let error of errors">{{error}}</li>          
+        </ul>
+     
+    
+      <div class="row no-gutters block-9">      
+
+        <div class="col-md-8 order-md-last d-flex">
+
+          <form class="bg-light p-4 p-md-5 contact-form" (ngSubmit)="onSubmit()" #clienteForm="ngForm" #form="ngForm">
+            <input type="hidden" class="form-control" [(ngModel)]="cliente.id" name="id">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Your Name" [(ngModel)]="cliente.nombre" name="nombre" required  minlength="4"  #nombre="ngModel">
+              <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">
+                <div *ngIf="nombre.errors['required']">
+                  Name is required.
+                </div>
+                <div *ngIf="nombre.errors['minlength']">
+                  Name must be at least 4 characters long.
+                </div>
+              </div>                  
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Your Last Name" [(ngModel)]="cliente.apellido" name="apellido" required minlength="4"  #apellido="ngModel">
+              <div *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)" class="alert alert-danger">
+                <div *ngIf="apellido.errors['required']">
+                  Last Name is required.
+                </div>
+                <div *ngIf="apellido.errors['minlength']">
+                  Last Name must be at least 4 characters long.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Your Email" [(ngModel)]="cliente.email" name="email" required email  #email="ngModel">
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                <div *ngIf="email.errors['required']">
+                  Email is required.
+                </div>
+                <div *ngIf="email.errors['email']">
+                  Email must be a valid email address.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Your Phone" [(ngModel)]="cliente.telefono" name="telefono" required>
+              </div>
+
+              <div class="form-group">
+                <!-- <input type="date" class="form-control" placeholder="fecha" [(ngModel)]="cliente.createAt" name="createAt" > -->
+              
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date"  class="form-control" [(ngModel)]="cliente.createAt" name="createAt" required
+                style="display: inline; width: 60%; margin-top: 0;"
+                >
+              
+                <mat-datepicker-toggle matIconSuffix [for]="picker"  style="color: #000000 !important;" ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                
+              </div>
+
+              <div class="form-group">
+                <select  [compareWith]="compareRegion"
+                class="form-control" [(ngModel)]="cliente.region" name="region"  required>
+                  <option [ngValue]="undefined">Seleccione una región</option>
+                 
+                  <option *ngFor="let region of regiones" [ngValue]="region">{{region.nombre}}</option>
+                </select>
+              </div>
+
+
+
+            <div class="form-group" >
+              <input type="submit"  *ngIf="!cliente.id"  value="Create" class="btn btn-primary py-3 px-5" >   <!--[disabled]="clienteForm.invalid" -->
+              <input type="submit"  *ngIf="cliente.id"   value="Update" class="btn btn-red py-3 px-5" >
+            </div>
+
+          </form>
+        
+        </div>
+
+        <div class="col-md-4 d-flex">
+            <div class="img" style="background-image: url(../../../assets/images/about.jpg);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+      

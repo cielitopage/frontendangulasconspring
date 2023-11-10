@@ -1,0 +1,25 @@
+
+<ul *ngIf="paginas?.length" class="pagination">
+
+    <li *ngIf="paginador.number > 0" class="page-item">
+        <a class="page-link" [routerLink]="['/clientes/page', 0]">Primera</a>
+    </li>
+
+    <li *ngIf="paginador.number > 0" class="page-item">
+        <a class="page-link" [routerLink]="['/clientes/page', paginador.number - 1]">Anterior</a>
+    </li>
+
+    <li *ngFor="let page of paginas"  [ngClass]="{'active': page === paginador.number } " class="page-item cursor-pointer">
+        <a class="page-link cursor-pointer" (click)="cambiarPagina(page)">{{page}}</a>
+              
+    </li>
+
+    <li *ngIf="paginador.number < paginador.totalPages - 1"     class="page-item">
+        <a class="page-link" [routerLink]="['/clientes/page', paginador.number + 1]">Siguiente</a>        
+    </li>
+
+    <li *ngIf="paginador.number < paginador.totalPages - 1"     class="page-item">
+        <a class="page-link" [routerLink]="['/clientes/page', paginador.totalPages - 1]">Última</a>
+    </li>   
+
+</ul>
