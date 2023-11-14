@@ -1,0 +1,134 @@
+
+<section class="ftco-section contact-section ftco-no-pb" id="contact-section">
+    <div class="container">
+
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+            <h1 class="big big-2">Contact</h1>
+            <h2 class="mb-4">Contact Me</h2>
+            <p>Si tienes alguna duda o consulta, no dudes en contactarme.</p>
+            </div>
+        </div>
+        <ul class="list-group" *ngIf="errors?.length > 0">
+          <li *ngFor="let error of errors">{{error}}</li>          
+        </ul>
+     
+    
+      <div class="row no-gutters block-9">      
+
+        <div class="col-md-8 order-md-last d-flex">
+
+          <form class="bg-light p-4 p-md-5 contact-form" (ngSubmit)="onSubmit()" #clienteForm="ngForm" #form="ngForm">
+
+            <input type="hidden" class="form-control" [(ngModel)]="factura.id" name="id">
+
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder={{factura.cliente.nombre}} [(ngModel)]="factura.cliente.nombre"  required   #cliente="ngModel"    disabled>                               
+             </div>
+
+             <div class="form-group">
+              <input type="text" class="form-control"  name="tipo" [(ngModel)]="factura.tipo" required   #tipo="ngModel" placeholder="tipo">
+                <div *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)" class="alert alert-danger">
+                    <div *ngIf="tipo.errors['required']">
+                        tipo is required.
+                    </div>
+                </div>            
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control"  name="descripcion" [(ngModel)]="factura.descripcion" required   #descripcion="ngModel" placeholder="Descripcion">
+                <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="alert alert-danger">
+                    <div *ngIf="descripcion.errors['required']">
+                        Descripcion is required.
+                    </div>
+                </div>            
+            </div>
+
+            <div class="form-group">
+              <textarea  class="form-control"  [(ngModel)]="factura.observacion" name="observacion" required   #observacion="ngModel" placeholder="Observacion">
+                </textarea>
+              <div *ngIf="observacion.invalid && (observacion.dirty || observacion.touched)" class="alert alert-danger">
+                <div *ngIf="observacion.errors['required']">
+                    observacion is required.
+                </div>                
+              </div>
+            </div>
+
+            <div class="form-group" >
+              <mat-form-field class="example-full-width">
+                  <mat-label>Producto</mat-label>
+                  <input type="text"
+                         placeholder="Selecione"
+                         aria-label="Number"
+                         matInput
+                         [formControl]="myControl"
+                         [matAutocomplete]="auto"  
+                         required >
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" 
+                  (optionSelected)="onSelectionChanged($event)">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option.nombre}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+
+              <div class="form-group">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Precio</th>
+                      <th scope="col">Cantidad</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let detalle of factura.items">
+                      <td>{{detalle.producto.nombre}}</td>
+                      <td>{{detalle.producto.precio}}</td>
+                      <td>
+                        <input type="number" class="form-control  sm-2"
+                      (change)="actualizarCantidad(detalle.producto.id,   $event)"
+                       value="{{detalle.cantidad}}">                 
+                        </td>
+                      <td>{{detalle.calcularImporte()}}</td>
+                      <td>
+                        <button type="button" class="btn  btn-sm" (click)="  eliminarItemFactura(detalle.producto.id)"> 
+                          <mat-icon>delete</mat-icon>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              
+              </div>
+              <div class="form-group text-right" *ngIf="factura.items.length > 0">
+                <p>El total es: {{factura.calcularGranTotal()}}</p>
+              </div>
+              <div class="form-group text-right" *ngIf="factura.items.length == 0">
+                <p>No hay productos agregados</p>
+              </div>
+
+          
+
+            <div class="form-group" >
+              <input type="submit" [disabled]="!form.valid || factura.items.length == 0"   (click)="guardarFactura()"  value="Crear Factura"  class="btn btn-primary py-3 px-5" >
+          
+              <input type="submit"   value="Actualizar Factura" class="btn btn-primary py-3 px-5" >
+            </div>   
+
+          </form>
+        
+        </div>
+
+        <div class="col-md-4 d-flex">
+            <div class="img" style="background-image: url(../../../assets/images/about.jpg);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+      

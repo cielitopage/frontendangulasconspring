@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Cliente } from 'src/app/clientes/clientes/cliente';
-import { ClienteService } from 'src/app/services/cliente.service';
-import { filter, map } from 'rxjs';
-import { Region } from 'src/app/clientes/clientes/region';
+import { Cliente } from '../../clientes/clientes/cliente';
+import { ClienteService } from '../../services/cliente.service';
+import { Factura } from '../models/factura';
+import { FacturasService } from '../../services/facturas.service';
 
 @Component({
   selector: 'app-facturascli',
@@ -26,6 +26,7 @@ export class FacturascliComponent implements OnInit {
 
   constructor(
     private clienteService: ClienteService,
+    private facturasService:FacturasService,
     private router: Router,
     private activatedRoute: ActivatedRoute
     
@@ -80,13 +81,21 @@ export class FacturascliComponent implements OnInit {
   
   }
 
-  crear():void{
-  }
+
 
   editar(id:number):void{
   }
 
   eliminar(id:number):void{
+
+    this.facturasService.delete(id).subscribe(
+      response => {
+        this.getClient(this.cliente.id);
+      }
+    );
+
+
+
   }
 
   deleteFactura(facturaId:number):void{

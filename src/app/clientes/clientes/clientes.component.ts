@@ -90,6 +90,10 @@ export class ClientesComponent  implements OnInit {
     this.router.navigate(['/facturas/ver', id]);
   }
 
+  crearFactura(clienteid: number){
+    this.router.navigate(['/facturas/form', clienteid]);
+  }
+
 
 
 

@@ -5,29 +5,25 @@ import { Factura } from '../facturas/models/factura';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UsuarioService } from './usuario.service';
+import { Producto } from '../facturas/models/producto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FacturasService implements OnInit {
 
-
 private urlEndPoint: string = 'http://localhost:8080/api/facturas';
 private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
-
-
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private usuarioService: UsuarioService,
-
     
   ) { }
 
 
   ngOnInit(): void {  
-
 
   }
 
@@ -57,8 +53,7 @@ private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
       this.router.navigate(['/clientes']);
       return true;
     }
-    return false;
-   
+    return false;   
   }
 
 
@@ -70,11 +65,31 @@ private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
         return throwError(e);
       })
     );
-    
+   }
+
+   delete(id: number): Observable<void>{
+    return this.http.delete<void>(`${this.urlEndPoint}/${id}`, {headers: this.agregarAuthorizationHeader()}).pipe(
+      catchError(e => {
+        this.isNoAutorizado(e);
+        return throwError(e);
+      })
+    );
+   }
+   
+   filtrarProductos(term: string): Observable<Producto[]>{
+    return this.http.get<Producto[]>(`${this.urlEndPoint}/filtrar-productos/${term}`, {headers: this.agregarAuthorizationHeader()})
+    .pipe(
+      catchError(e => {
+        this.isNoAutorizado(e);
+        return throwError(e);
+      })
+      );
+    }
 
 
-}
-
+    create(factura: Factura): Observable<Factura>{
+      return this.http.post<Factura>(this.urlEndPoint, factura, {headers: this.agregarAuthorizationHeader()})
+    }
 
 
 
